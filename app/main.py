@@ -1,11 +1,15 @@
 from fastapi import FastAPI
-from app.routes import users
+from app.routes import Upload, Manipulation
 
-app = FastAPI(title="Mi API RESTful con FastAPI")
+app = FastAPI(
+    title="XM ApiRestful",
+    description="Api Restful para el consumo y manipulación de datos en Local para la empresa XM.",
+    redoc_url="/documentacion",
+    docs_url=None,
+    Version="1.0.0"
+    )
 
 # Registrar rutas
-app.include_router(users.router, prefix="/users", tags=["Usuarios"])
+app.include_router(Upload.router, prefix="/Upload", tags=["Cargar datos"])
 
-@app.get("/")
-def root():
-    return {"mensaje": "Bienvenido a mi API con FastAPI"}
+app.include_router(Manipulation.router, prefix="/Manipulation", tags=["Manipulación de los datos"])
